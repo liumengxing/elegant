@@ -1,0 +1,68 @@
+server:
+  port: 8008
+  tomcat:
+      max-connections: 10000 # Maximum number of connections that the server accepts and processes at any given time.
+      max-http-post-size: 20MB # Maximum size of the HTTP post content.
+      max-threads: 200 # Maximum amount of worker threads.
+      min-spare-threads: 10 # Minimum amount of worker threads.
+      accept-count: 100 # Maximum queue length for incoming connection requests when all possible request processing threads are in use.
+      accesslog:
+        enabled: true
+
+spring:
+  application:
+    name: snatch-crawl-tech
+  datasource:
+    url: jdbc:mysql://172.20.63.171:33061/tech_read?characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired）
+      #MySQL缺省超时时间: 8小时，建议设置比数据库超时时长少30秒以上
+      #所以：8小时 - 30秒 = 28770000毫秒
+      maxLifetime: 28770000
+      #连接池中允许的最大连接数。缺省值：10；
+      #推荐的公式：((core_count * 2) + effective_spindle_count)
+      # (cpu核数 * 2) + 硬盘个数
+      maximumPoolSize: 15
+      cachePrepStmts: true   #是否自定义配置，为true时下面两个参数才生效
+      prepStmtCacheSize: 250  #连接池大小默认25，官方推荐250-500
+      prepStmtCacheSqlLimit: 2048 #单条语句最大长度默认256，官方推荐2048
+      useServerPrepStmts: true  #新版本MySQL支持服务器端准备，开启能够得到显著性能提升
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+  redis:
+    host: 172.20.63.171
+    port: 63791
+    password: 123456
+    timeout: 3000ms
+    lettuce:
+      shutdown-timeout: 100ms
+      pool:
+        max-active: 16
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+
+mybatis:
+  configuration:
+    auto-mapping-behavior: full
+    map-underscore-to-camel-case: true # [DB字段]<<<--驼峰式映射-->>>[对象属性]
+    mapper-locations: classpath:com/tech/service/snatch/dao/*.xml
+
+logging:
+  level:
+    root: info
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka/
+  instance:
+    instance-id: snatch-crawl-tech
+    prefer-ip-address: true
