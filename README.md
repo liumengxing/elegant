@@ -1,4 +1,2 @@
 # elegant
 juju's note
-..
-..
