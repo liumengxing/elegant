@@ -12,3 +12,7 @@
 ## vscode
 
 git config --global credential.helper store
+
+## 再看看
+
+https://mp.weixin.qq.com/s?__biz=MzU0OTk3ODQ3Ng==&mid=2247486730&idx=1&sn=a3c2aba4a8b464b87dfa93e836704077&chksm=fba6e509ccd16c1fe39cdf99499c6fb8661309635ce593fbfd90d009dc40d53a39aa006cda2b&scene=0&xtrack=1#rd
